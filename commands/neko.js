@@ -1,5 +1,5 @@
 snekfetch = require('snekfetch');
-exports.run = async (client, message) => {
+exports.run = async (bot, msg) => {
     await snekfetch.get('https://nekos.life/api/neko')
         .then(r => message.channel.send({
             embed: {
