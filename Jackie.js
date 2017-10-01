@@ -6,6 +6,7 @@ var config = require("./config.json")
 var prefix = config.prefix;
 var ownerID = config.ownerID;
 var logger = require("./logger.js")
+var hd = require("humanize-duration")
 let dBots = config.bots.botsd;
 let monsters = "melmsie and aeth, they are scary and means"
 let msbots = config.bots.mbots;
@@ -50,6 +51,18 @@ function setgame(){
 	let gamesnum = Math.floor(Math.random() * games.length)
 bot.user.setPresence({ game: { name: games[gamesnum] + " |+-help", type: 0 } });
 	}
+var os = require('os');
+
+
+function collectMemoryStats() {
+    var memUsage = process.memoryUsage();
+	let totalmem = os.totalmem() - os.freemem() / 3
+    metrics.gauge('shards', bot.shard.count)
+	metrics.gauge('memoryused', totalmem)
+	metrics.gauge('users', bot.users.size)
+	metrics.gauge('uptime', hd(bot.uptime, {round: true}))
+    metrics.increment('memory.statsReported');
+}
 bot.on('ready', () => {
   serverCount();
 	setgame();
@@ -89,3 +102,4 @@ bot.on('message', msg => {
    }
 });
 bot.login(config.keys.token);
+setInterval(collectMemoryStats, 3000);
