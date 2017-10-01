@@ -50,11 +50,11 @@ function serverCount() {
 	})
 }
 
-function setgame() 
+function setgame() {
 	let gamesnum = Math.floor(Math.random() * games.length)
 	bot.user.setPresence({ game: { name: games[gamesnum] + " |+-help", type: 0 } });
 	}
-<<<<<<< HEAD
+
 var os = require('os');
 
 
@@ -67,9 +67,7 @@ function collectMemoryStats() {
 	metrics.gauge('uptime', hd(bot.uptime, {round: true}))
     metrics.increment('memory.statsReported');
 }
-=======
 
->>>>>>> e92c63a81df86082667a549874879e16fdcd4d91
 bot.on('ready', () => {
   	serverCount();
 	setgame();
